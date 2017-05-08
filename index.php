@@ -1,21 +1,15 @@
 <?php
-
-function fizz_buzz_spec($num)
-{
-    if (($num % 15) === 0) {
-        return 'FizzBuzz';
-    } elseif (($num % 3) === 0) {
-        return 'Fizz';
-    } elseif (($num % 5) === 0) {
-        return 'Buzz';
+for ( $i = 1; $i <= 100; $i++ ) {
+    if ( $i % 15 == 0 ) {
+        print 'FizzBuzz';
+    } else if ( $i % 3 == 0 ) {
+        print 'Fizz';
+    } else if ( $i % 5 == 0 ) {
+        print 'Buzz';
     } else {
-        return $num;
+        print $i;
     }
+    print "n";
 }
-
-function fizz_buzz_echo($carry, $num)
-{
-    echo fizz_buzz_spec($num), PHP_EOL;
-}
-
-array_reduce(range(1, 100), 'fizz_buzz_echo');
+// ＜ﾌﾟｰｸｽｸｽ
+?>
