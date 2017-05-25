@@ -20,17 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mysqli->query("delete from `messages` where `id` = {$_POST['del']}");
     $result_message = 'メッセージを削除しました;)';
   }
-
 }
-
-
 
 
 // データベースからレコード取得
 $result = $mysqli->query('select * from `messages` order by `id` desc');
 ?>
 
-<!--入力フォーム-->
 <html>
   <head>
     <meta charset="UTF-8">
@@ -39,35 +35,33 @@ $result = $mysqli->query('select * from `messages` order by `id` desc');
   <body>
     <p><?php echo $result_message; ?></p>
     <form action="" method="post">
-       <div><label for="メッセージ">メッセージ:<label>  <!--メッセージフォーム-->
-         <input type="text" name="message"/>
-       </div>
-       <div><label for="名前">    名前:<label>    <!--名前入力フォーム -->
-         <input type="text" name="name" />
-       </div>
-       <div><label for="パスワード">パスワード:<label> <!--パスワード入力-->
-         <input type="text" name="pass" />
-       </div>
+      <input type="text" name="message" />
+      <input type="text" name="name" />
+      <input type="text" name="pass" />
       <input type="submit" />
     </form>
+    <form method="POST" action="<?php echo($_SERVER['PHP_SELF']) ?>">
+    <?php
+    if (isset($simEdit[1]) && isset($simEdit[2])) {
+         echo '<input type="hidden" name="edit"><br>';
+     } else {
+        echo '<label for="edit">編集対象番号</label><br>
+              <input type="text" name="edit"><br>
+              <input type="submit" value="編集する">';
+     }
+    ?>
+</form>
 
-
-<!--テーブル表示-->
     <?php foreach ($result as $row) : ?>
       <p>
         <form action="" method="post">
           <?php echo $row['body']; ?>
           <?php echo htmlspecialchars($row['name'],ENT_QUOTES,'UTF-8'); ?>
           <?php echo htmlspecialchars($row['nowtime'],ENT_QUOTES,'UTF-8'); ?>
-          <!--削除ボタン-->
           <input type="hidden" name="del" value="<?php echo $row['id']; ?>" />
           <input type="submit" value="削除" />
         </form>
-        <!--編集ボタン-->
-       <form action="5_2.php" method="post">
-         <input type="hidden" name="edit" value="<?php echo $row['id']; ?>">
-         <input type="submit" value="編集する">
-       </form>
+        <br>
       </p>
     <?php endforeach; ?>
   </body>
