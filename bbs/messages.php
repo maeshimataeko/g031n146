@@ -1,3 +1,5 @@
+<!-- bbs/messages.php -->
+
 <?php
 $db_user = 'root';     // ユーザー名
 $db_pass = 'U=3dt68Wm8'; // パスワード
