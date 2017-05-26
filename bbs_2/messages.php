@@ -26,7 +26,7 @@ if (!$result) {
 
   // メッセージの削除
   if (!empty($_POST['del'])) {
-    $mysqli->query("delete from `messages` where `id` = {$_POST['del']}");
+   $mysqli->query("delete from `messages` where `id` = {$_POST['del']} and password = '{$_POST['pass']}'");
     $result_message = 'メッセージを削除しました;)';
   }
 
@@ -70,13 +70,15 @@ $query= $mysqli->query("select * from thread inner join messages on thread.id = 
           <?php echo htmlspecialchars($row['name'],ENT_QUOTES,'UTF-8'); ?>
           <?php echo htmlspecialchars($row['body'],ENT_QUOTES,'UTF-8'); ?>
           <?php echo htmlspecialchars($row['nowtime'],ENT_QUOTES,'UTF-8'); ?>
+          <form action="" method="post">
+          <input type="text" name="pass"/>
           <!--削除ボタン-->
           <input type="hidden" name="del" value="<?php echo $row['id']; ?>" />
           <input type="submit" value="削除" />
         </form>
         <!--編集ボタン-->
-       <form action="messages.php" method="post">
-         <input type="hidden" name="edit" value="<?php echo $row['ed']; ?>">
+       <form action="messages_edit.php" method="post">
+         <input type="hidden" name="edit" value="<?php echo $row['id']; ?>">
          <input type="submit" value="編集する">
        </form>
       </p>

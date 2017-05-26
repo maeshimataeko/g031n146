@@ -9,9 +9,9 @@ $mysqli = new mysqli('localhost', $db_user, $db_pass, $db_name);
 
 //編集
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			if (!empty($_POST['edit']) && !empty($_POST['name']) && !empty($_POST['pass'])) {
+			if (!empty($_POST['pass'])){
 
-					$result = $mysqli->query("UPDATE `thread` SET `thread_name`='{$_POST['name']}',`thread_pass`='{$_POST['pass']}' WHERE id = '{$_POST['edit']}'");
+					$result = $mysqli->query("UPDATE `thread` SET `thread_name`='{$_POST['name']}', `thread_pass`='{$_POST['pass']}' WHERE id = '{$_POST['edit']}'");
 					header("Location: top.php");
 
 				}else{
@@ -24,8 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-
-
+ var_dump($_POST['edit']);
 
 
 ?>
