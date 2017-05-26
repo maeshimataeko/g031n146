@@ -9,22 +9,28 @@ $mysqli = new mysqli('localhost', $db_user, $db_pass, $db_name);
 
 //編集
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			if (!empty($_POST['pass'])){
+			if (!empty($_POST['edit']) and !empty($_POST['name']) and !empty($_POST['pass']) ) {
+     		$query = $mysqli->query("SELECT `password` FROM `messages` WHERE id = {$_POST['edit']}");
 
-					$result = $mysqli->query("UPDATE `thread` SET `thread_name`='{$_POST['name']}', `thread_pass`='{$_POST['pass']}' WHERE id = '{$_POST['edit']}'");
-					header("Location: top.php");
-
-				}else{
+				foreach($query as $row){
+					//パスワード認証
+        if($row['password'] == $_POST['pass']){
+					$result = $mysqli->query("UPDATE `messages` SET `body`='{$_POST['message']}',`name`='{$_POST['name']}' WHERE id = '{$_POST['edit']}'");
+					header("Location: 5_1.php");
+				}
+				else{
 					$err_msg = "パスワード違います"; //エラーメッセージ
-
+				}
 			}
-		}
+			}
+}
 
 
 
 
 
- var_dump($_POST['edit']);
+
+
 
 
 ?>
@@ -40,6 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </p>
 <p>内容を変更して下さい。</p>
 <form action="" method="post">
+	<div><label for="メッセージ">メッセージ:<label>  <!--メッセージフォーム-->
+		<input type="text" name="message"/>
+		</div>
 		<!--名前フォーム-->
 		<div><label for="名前">    名前:<label>
 		<input type="text" name="name" />
@@ -49,10 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<input type="text" name="pass" />
 		 </div>
 		 <!--編集ボタン-->
-		<input type="hidden" name="edit" value="<?php echo $_POST['edit_id']?>">
+		<input type="hidden" name="edit" value="<?php echo $_POST['edit']?>">
 		<input type="submit" value="変更する"></br>
 		<!--ページ遷移-->
-		<a href="top.php">ホーム画面に戻る</a>
+		<a href="5_1.php">ホーム画面に戻る</a>
 </form>
 
 </body>

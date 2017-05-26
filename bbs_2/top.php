@@ -29,9 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
 
       if (!empty($_POST['edit']) && $row['thread_pass'] == $_POST['pass']) {
-        $edit_id = $_POST['edit'];
-
-          header("Location: thread_edit.php?{$edit_id} ");
+          header("Location: thread_edit.php");
       }
 
   }

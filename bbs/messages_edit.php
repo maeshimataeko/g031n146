@@ -9,9 +9,9 @@ $mysqli = new mysqli('localhost', $db_user, $db_pass, $db_name);
 
 //編集
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			if (!empty($_POST['pass'])){
+			if (!empty($_POST['edit']) && !empty($_POST['name']) && !empty($_POST['pass'])) {
 
-					$result = $mysqli->query("UPDATE `thread` SET `thread_name`='{$_POST['name']}', `thread_pass`='{$_POST['pass']}' WHERE id = '{$_POST['edit']}'");
+					$result = $mysqli->query("UPDATE `messages` SET `name`='{$_POST['name']}',`body`='{$_POST['body']}',`password`='{$_POST['pass']}' WHERE id = '{$_POST['edit']}'");
 					header("Location: top.php");
 
 				}else{
@@ -24,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
- var_dump($_POST['edit']);
+
+
 
 
 ?>
@@ -45,11 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<input type="text" name="name" />
 		 </div>
 		 <!--パスワードフォーム-->
-		 <div><label for="パスワード">パスワード:<label>
-		<input type="text" name="pass" />
-		 </div>
+		 <div><label for="メッセージ">メッセージ:<label>
+		<input type="text" name="body" />
+	</div>
+	<div><label for="パスワード">パスワード:<label>
+ <input type="text" name="pass" />
+	</div>
+
 		 <!--編集ボタン-->
-		<input type="hidden" name="edit" value="<?php echo $_POST['edit_id']?>">
+		<input type="hidden" name="edit" value="<?php echo $_POST['edit']?>">
 		<input type="submit" value="変更する"></br>
 		<!--ページ遷移-->
 		<a href="top.php">ホーム画面に戻る</a>
