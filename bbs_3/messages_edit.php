@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (!empty($_POST['edit']) && !empty($_POST['name']) && !empty($_POST['pass'])) {
 
 					$result = $mysqli->query("UPDATE `messages` SET `name`='{$_POST['name']}',`body`='{$_POST['body']}',`password`='{$_POST['pass']}' WHERE id = '{$_POST['edit']}'");
-					header("Location: messages.php");
+					header("Location: top.php");
 
 				}else{
 					$err_msg = "パスワード違います"; //エラーメッセージ

@@ -6,12 +6,18 @@ $db_name = 'bbs';     // データベース名
 $err_msg ="";
 // MySQLに接続
 $mysqli = new mysqli('localhost', $db_user, $db_pass, $db_name);
+$message = htmlspecialchars($_POST['messages']);
 
 //編集
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			if (!empty($_POST['pass'])){
+			if (!empty($_POST['edit']) && !empty($_POST['name']) && !empty($_POST['pass'])) {
 
-					$result = $mysqli->query("UPDATE `thread` SET `thread_name`='{$_POST['name']}', `thread_pass`='{$_POST['pass']}' WHERE id = '{$_POST['edit']}'");
+				$query = $mysqli->query("SELECT `password` FROM `messages` WHERE id = {$_POST['edit']}");
+
+				foreach($query as $row){
+					//パスワード認証
+				if($row['password'] == $_POST['pass']){
+					$result = $mysqli->query("UPDATE `messages` SET `body`='{$_POST['body']}',`name`='{$_POST['name']}' WHERE id = '{$_POST['edit']}' ");
 					header("Location: top.php");
 
 				}else{
@@ -19,12 +25,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 			}
 		}
+	}
+}
 
 
 
 
 
- var_dump($_POST['edit']);
+
+
 
 
 ?>
@@ -45,9 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<input type="text" name="name" />
 		 </div>
 		 <!--パスワードフォーム-->
-		 <div><label for="パスワード">パスワード:<label>
-		<input type="text" name="pass" />
-		 </div>
+		 <div><label for="メッセージ">メッセージ:<label>
+		<input type="text" name="body" />
+	</div>
+	<div><label for="パスワード">パスワード:<label>
+ <input type="password" name="pass" />
+	</div>
 		 <!--編集ボタン-->
 		<input type="hidden" name="edit" value="<?php echo $_POST['edit']?>">
 		<input type="submit" value="変更する"></br>
